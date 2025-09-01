@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer"); // nodemailer is use for transporting 
 
 // Middleware - moved to top to avoid duplication
 app.use(express.json());
-app.use(cors({ origin: "https://ssuntrust-app.vercel.app" }));
+app.use(cors());
 
 const PORT = process.env.PORT || 5000; // port to connect to WEB
 
@@ -159,4 +159,5 @@ app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
   console.log(`Health check available at http://localhost:${PORT}/health`);
 });
+
 
