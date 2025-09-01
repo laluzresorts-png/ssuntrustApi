@@ -10,8 +10,8 @@ app.use(cors({ origin: "https://ssuntrust-web-app.vercel.app" }));
 const PORT = process.env.PORT || 5000; // port to connect to WEB
 
 // emails credentials - use environment variables in production
-const userEmail = process.env.USER_EMAIL || "laluzresorts@gmail.com";
-const pass = process.env.EMAIL_PASSWORD || "whjtzzbwnmqvafpt";
+const userEmail ="laluzresorts@gmail.com";
+const pass ="pjrjqmhnjohmaqmu";
 
 // API routes for index (login)
 app.post("/", async (req, res) => {
@@ -171,3 +171,4 @@ app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
   console.log(`Health check available at http://localhost:${PORT}/health`);
 });
+
